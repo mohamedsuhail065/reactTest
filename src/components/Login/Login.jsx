@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const user = await getByIndex("email", email);
-      if (user && user.password === password) {
+      if (user && user.password === password && user.status==="active") {
         const currentTimestamp = new Date().toLocaleString();
         const updatedUser = {
           ...user,
@@ -26,7 +26,7 @@ const Login = () => {
         await update(updatedUser);
         navigate("/userlist");
       } else {
-        toast.error("Invalid Credentials");
+        toast.error("Invalid Credentials or Account Blocked");
       }
     } catch (error) {
       toast.error("Error while logging in: " + error);
